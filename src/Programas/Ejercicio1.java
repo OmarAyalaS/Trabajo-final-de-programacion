@@ -1,61 +1,57 @@
 package Programas;
-import java.util.Scanner;
 
 public class Ejercicio1 {
     public static void main(String[] args) {
+        //Datos de prueba
+        double precio =  55.5;
+        int talleres = 4;
+        int referidos = 9;
 
-        double descuento1 = 0;
-        double descuento2 = 0;
-        int cantidad,tipo;
-        double decuentoTotal = 0;
-        Scanner sc = new Scanner(System.in);
+        //Para probar método calcularDsctoxTaller
+        double descuento1 = calcularDsctoxTaller(precio,talleres);
+        System.out.printf("El primer descuento es: %.2f \n", descuento1);
 
-        System.out.println("TIPOS DE PRENDAS");
-        System.out.println("(1) Pantalon");
-        System.out.println("(2) Polo");
-        System.out.println("(3) Casaca");
+        //Para probar método calcularDsctoxReferido
+        double descuento2 = calcularDsctoxReferido(precio,referidos);
+        System.out.printf("El segundo descuento es: %.2f \n", descuento2);
 
-        System.out.println("Ingrese el tipo de prenda que desea comprar (opción 1   2 o 3)  ");
-        tipo=sc.nextInt();
-
-        if (tipo==1) {
-            descuento1 = 0.08;
-        }
-        else if (tipo==2) {
-            descuento1 = 0.05;
-        }
-        else if (tipo==3) {
-            descuento1 = 0.07;
-        }
-        else {
-            System.out.println("No ingreso el tipo de prenda correcta");
-        }
-
-        System.out.println("Ingrese la cantidad de prendas que va a comprar: ");
-        cantidad = sc.nextInt();
-        if (cantidad < 12) {
-            descuento2 = 0;
-        }
-        else if (cantidad < 37) {
-            descuento2 = 0.10;
-        }
-        else if (cantidad < 73) {
-
-            descuento2 = 0.20;
-        }
-        else if (cantidad < 97) {
-            descuento2 = 0.25;
-        }
-        else if (cantidad >= 97) {
-            descuento2 = 0.30;
-        }
-        else{
-            System.out.println("No ingresó la cantidad correcta");
-        }
-
-        decuentoTotal = (1-(1-descuento1)*(1-descuento2))*100;
-        System.out.printf("El descuento total por su compra es: %.1f %s", decuentoTotal, "%" );
+        //Para probar método calcularCostoxTalleres
+        double precioFinal = calcularCostoxTalleres(precio,talleres,referidos);
+        System.out.printf("El precio final (incluyendo descuentos) es: %.2f \n ", precioFinal);
 
     }
+
+    static double calcularDsctoxTaller(double precio, int talleres){
+        double descuento = 0.0;
+        if (talleres >=2 && talleres <=4){
+            descuento = 0.05 * precio;
+        }else if(talleres >=5 && talleres <=7){
+            descuento = 0.10 * precio;
+        }else if(talleres >=8 && talleres <=10){
+            descuento = 0.15 * precio;
+        }
+        return descuento;
+    }
+
+    static double calcularDsctoxReferido(double precio, int referidos){
+        double descuento = 0.0;
+        if (referidos >=2 && referidos <=5){
+            descuento = 0.07 * precio;
+        }else if(referidos >=6 && referidos <=8){
+            descuento = 0.10 * precio;
+        }else if(referidos ==9 || referidos ==10){
+            descuento = 0.12 * precio;
+            descuento = descuento + 20;
+        }
+        return descuento;
+    }
+
+    static double calcularCostoxTalleres(double precio, int talleres, int referidos){
+        double descuento1 = calcularDsctoxTaller(precio,talleres);
+        double descuento2 = calcularDsctoxReferido(precio,referidos);
+        double precioFinal = precio - descuento1 - descuento2;
+        return precioFinal;
+    }
 }
+
 
